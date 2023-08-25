@@ -1,21 +1,15 @@
-// src/components/Posts.js
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
-function Posts() {
+function PostsAxios() {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetch('https://jsonplaceholder.typicode.com/posts')
+    axios.get('https://jsonplaceholder.typicode.com/posts')
       .then(response => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        return response.json();
-      })
-      .then(data => {
-        setPosts(data);
+        setPosts(response.data);
         setLoading(false);
       })
       .catch(error => {
@@ -29,7 +23,7 @@ function Posts() {
 
   return (
     <div>
-      <h1>Posts using fetch</h1>
+      <h1>Posts using Axios</h1>
       <ul>
         {posts.map(post => (
           <li key={post.id}>
@@ -42,4 +36,4 @@ function Posts() {
   );
 }
 
-export default Posts;
+export default PostsAxios;
